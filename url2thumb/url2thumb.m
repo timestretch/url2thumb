@@ -26,7 +26,7 @@
 	// Register for notification when page is done loading
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(webPageFinishedLoading:) name:WebViewProgressFinishedNotification object:nil];
 	
-	// Hide scrollbars if possible.  Sometimes they show up on sites that use frames
+	// Hide scrollbars if possible.	 Sometimes they show up on sites that use frames
 	[[[self.webView mainFrame] frameView] setAllowsScrolling:NO];
 	[[self.webView mainFrame] loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:inURL]]];
 	

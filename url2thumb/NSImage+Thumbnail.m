@@ -15,7 +15,7 @@
 {
 	[self lockFocus];
 	NSBitmapImageRep *bitmap = [[NSBitmapImageRep alloc] initWithFocusedViewRect:NSMakeRect(0, 0, self.size.width, self.size.height)];
-    [self unlockFocus];
+	[self unlockFocus];
 	return bitmap;
 }
 //-------------------------------------------------------------------------
@@ -23,10 +23,10 @@
 {
 	NSInteger outputHeight = round((self.size.height/(float)self.size.width) * outputWidth);
 	NSImage *resultImage = [[NSImage alloc] initWithSize:NSMakeSize(outputWidth, outputHeight)];
-    [resultImage lockFocus];
-    [[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationHigh];
-    [[self bitmap] drawInRect:NSMakeRect(0.0, 0.0, outputWidth, outputHeight)];
-    [resultImage unlockFocus];
+	[resultImage lockFocus];
+	[[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationHigh];
+	[[self bitmap] drawInRect:NSMakeRect(0.0, 0.0, outputWidth, outputHeight)];
+	[resultImage unlockFocus];
 	return [resultImage autorelease];
 }
 //-------------------------------------------------------------------------
@@ -36,9 +36,9 @@
 	NSImage *sourceImage = [self resizeToWidth:outputWidth];
 	NSImage *resultImage = [[NSImage alloc] initWithSize:NSMakeSize(outputWidth, outputHeight)];
 	
-    [resultImage lockFocus];
-    [[sourceImage bitmap] drawAtPoint:NSMakePoint(0.0, outputHeight - sourceImage.size.height)];
-    [resultImage unlockFocus];
+	[resultImage lockFocus];
+	[[sourceImage bitmap] drawAtPoint:NSMakePoint(0.0, outputHeight - sourceImage.size.height)];
+	[resultImage unlockFocus];
 	return [resultImage autorelease];
 }
 
