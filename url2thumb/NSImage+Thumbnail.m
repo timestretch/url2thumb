@@ -16,7 +16,7 @@
 	[self lockFocus];
 	NSBitmapImageRep *bitmap = [[NSBitmapImageRep alloc] initWithFocusedViewRect:NSMakeRect(0, 0, self.size.width, self.size.height)];
 	[self unlockFocus];
-	return bitmap;
+	return [bitmap autorelease];
 }
 //-------------------------------------------------------------------------
 -(NSImage*)resizeToWidth:(NSInteger)outputWidth
