@@ -14,7 +14,7 @@
 
 void print_help()
 {
-	printf("By Erik Wrenholt 2006-2012. http://www.timestretch.com/\n");
+	printf("By Erik Wrenholt 2006-2015. http://www.timestretch.com/\n");
 	printf("Specify either png or jpg suffix for output file.\n");
 	printf("Defaults for view size shown below.\n");
 	printf("If the output size is omitted, a full sized image will be captured.\n");
@@ -27,6 +27,7 @@ void print_help()
 	printf("            -viewHeight 768 \\\n");
 	printf("            -outputWidth 150 \\\n");
 	printf("            -outputHeight 100 \\\n");
+	printf("            -transparentWebView 0 \\\n");
 	printf("            -quality 0.75\n");
 }
 
@@ -52,6 +53,8 @@ int main(int argc, const char * argv[])
 		NSInteger outputWidth = [args integerForKey:@"outputWidth"];
 		NSInteger outputHeight = [args integerForKey:@"outputHeight"];
 		
+		NSInteger transparentWebView = [args integerForKey:@"transparentWebView"];
+		
 		float quality = [args floatForKey:@"quality"];
 		
 		
@@ -70,9 +73,9 @@ int main(int argc, const char * argv[])
 			quality = 1.0;
 		}
 		
-		if (![url hasPrefix:@"http"])
+		if (!([url hasPrefix:@"http"] || [url hasPrefix:@"file"]))
 		{
-			printf("Error: The URL needs to start with 'http'.\n\n");
+			printf("Error: The URL needs to start with 'http' or 'file'.\n\n");
 			print_help();
 			exit(0);
 		}
@@ -93,7 +96,8 @@ int main(int argc, const char * argv[])
 		
 		NSImage *fullSizeScreenshot = [url2thumb imageForURL:url
 									  viewWidth:viewWidth
-									 viewHeight:viewHeight];
+									 viewHeight:viewHeight
+									transparent:transparentWebView];
 		
 		NSImage *outputImage = nil;
 		NSData *imageData = nil;

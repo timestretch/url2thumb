@@ -23,7 +23,8 @@
 // Often you can get the iPhone version of a web site, with a viewWidth of 320 or 480.
 
 -(NSImage*)imageForURL:(NSString*)inURL
-			 viewWidth:(long)inPageWidth
-			viewHeight:(long)inPageHeight;
+			 viewWidth:(long)pageWidth
+			viewHeight:(long)pageHeight
+		   transparent:(BOOL)transparentWebView;
 
 @end

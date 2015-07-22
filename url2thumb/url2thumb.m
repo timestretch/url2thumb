@@ -16,12 +16,20 @@
 // initial rendering. The view will be resized to fit the full size of the web page.
 //
 // The output of this method is always a full-height image.
--(NSImage*)imageForURL:(NSString*)inURL viewWidth:(long)pageWidth viewHeight:(long)pageHeight
+-(NSImage*)imageForURL:(NSString*)inURL
+			 viewWidth:(long)pageWidth
+			viewHeight:(long)pageHeight
+		   transparent:(BOOL)transparentWebView
 {
 	self.viewLoaded = NO;
 	
 	NSRect bounds = NSMakeRect(0.0, 0.0, pageWidth, pageHeight);
 	self.webView = [[WebView alloc] initWithFrame:bounds frameName:nil groupName:nil];
+
+	if (transparentWebView) {
+		self.webView.drawsBackground = NO;
+		self.webView.wantsLayer = YES;
+	}
 	
 	// Register for notification when page is done loading
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(webPageFinishedLoading:) name:WebViewProgressFinishedNotification object:nil];
@@ -44,6 +52,9 @@
 	
 	// Create an image of the webpage.
 	NSBitmapImageRep *bitmap = (NSBitmapImageRep*)[self.webView bitmapImageRepForCachingDisplayInRect:bitmapRect];
+
+	CGContextRef ctx = [[NSGraphicsContext graphicsContextWithBitmapImageRep:bitmap] graphicsPort];
+	CGContextSetShouldSmoothFonts(ctx, false);
 	
 	[self.webView cacheDisplayInRect:[self.webView bounds] toBitmapImageRep:bitmap];
 	NSImage *image = [[[NSImage alloc] initWithSize:bitmapRect.size] autorelease];
